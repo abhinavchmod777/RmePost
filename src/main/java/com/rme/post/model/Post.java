@@ -1,17 +1,24 @@
 package com.rme.post.model;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
 @Entity
 //@JsonIgnoreProperties("postId")
-@JsonPropertyOrder({"postId","category","subject","description","views","creationTime","lastUpdateTime"})
+@JsonPropertyOrder({"postId","category","subject","description","likes","dislikes","attachments","comments","creationTime","lastUpdateTime"})
 public class Post extends AbstractTimestampEntity
 {
 //-----------------------primary fields--------------------------------//
@@ -22,11 +29,17 @@ public class Post extends AbstractTimestampEntity
 	private String category;
 	private String subject;
 	private String description;
-	private int views;
+	private int likes;
+	private int dislikes;
+
+// MantToOne mapping to be established with the userAccount
+
+	@OneToMany(mappedBy = "post" , cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+	private Set<Attachment> attachments ;
 	
-//	@Lob
-//	@Column(columnDefinition="mediumLob",nullable=true)
-//	private byte[] attachment;
+	@OneToMany(mappedBy="post", cascade = CascadeType.ALL , fetch=FetchType.EAGER)
+	private Set<Comment> comments = new HashSet<Comment>();
+
 
 //--------------------getters and setters------------------------------//
 	public int getPostId() {
@@ -53,25 +66,29 @@ public class Post extends AbstractTimestampEntity
 	public void setDescription(String description) {
 		this.description = description;
 	}
-//	public byte[] getAttachment() {
-//		return attachment;
-//	}
-//	public void setAttachment(byte[] attachment) {
-//		this.attachment = attachment;
-//	}
-	public int getViews() {
-		return views;
+	public int getLikes() {
+		return likes;
 	}
-	public void setViews(int views) {
-		this.views = views;
+	public void setLikes(int views) {
+		this.likes = views;
 	}
-
-	
-	//----------------------------toString()----------------------------------------//
-	@Override
-	public String toString() {
-		return "Post [postId=" + postId + ", category=" + category + ", subject=" + subject + ", description="
-				+ description + "]";
+	public int getDislikes() {
+		return dislikes;
+	}
+	public void setDislikes(int dislikes) {
+		this.dislikes = dislikes;
+	}
+	public Set<Attachment> getAttachments() {
+		return attachments;
+	}
+	public void setAttachments(Set<Attachment> attachments) {
+		this.attachments = attachments;
+	}
+	public Set<Comment> getComments() {
+		return comments;
+	}
+	public void setComments(Set<Comment> comments) {
+		this.comments = comments;
 	}
 	
 }

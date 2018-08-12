@@ -72,17 +72,33 @@ public class PostController
 		}
 	}
 	
-	//---------------------------increment views by id---------------------------//
-	@PostMapping(value="/post/{id}")
-	public ResponseEntity<Object> increaseView(@PathVariable int id)
+	//---------------------------increment likes by id---------------------------//
+	@PostMapping(value="/likePost/{id}")
+	public ResponseEntity<Object> increaseLikes(@PathVariable int id)
 	{
 		try {
-			postService.increseViewById(id);
-			return ResponseEntity.ok().body("view incremented");
+			
+			postService.increaseLikesById(id);
+			return ResponseEntity.ok().body("likes incremented");
 		}
 		catch(Exception e) {
 			e.printStackTrace();
-			return ResponseEntity.badRequest().body("Error incrementing views ");
+			return ResponseEntity.badRequest().body("Error incrementing likes ");
+		}
+	}
+	
+	//---------------------------increment dislikes by id---------------------------//
+	@PostMapping(value="/dislikePost/{id}")
+	public ResponseEntity<Object> increaseDislike(@PathVariable int id)
+	{
+		try {
+			
+			postService.increaseLikesById(id);
+			return ResponseEntity.ok().body("Dislikes incremented");
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.badRequest().body("Error incrementing dislikes ");
 		}
 	}
 	
@@ -143,6 +159,7 @@ public class PostController
 			e.printStackTrace();
 			return ResponseEntity.badRequest().body("Error deleting post");
 		}
-		
 	}
+	
+	
 }

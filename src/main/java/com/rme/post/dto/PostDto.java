@@ -1,11 +1,16 @@
 package com.rme.post.dto;
 
+import java.util.List;
+import java.util.Set;
+
+import com.rme.post.model.Attachment;
+
 public class PostDto 
 {
 	private String category;
 	private String subject;
 	private String description;
-//	private byte[] attachment;
+	private Set<Attachment> attachments;
 	
 	public String getCategory() {
 		return category;
@@ -25,16 +30,16 @@ public class PostDto
 	public void setDescription(String description) {
 		this.description = description;
 	}
-//	public byte[] getAttachment() {
-//		return attachment;
-//	}
-//	public void setAttachment(byte[] attachment) {
-//		this.attachment = attachment;
-//	}
+	public Set<Attachment> getAttachments() {
+		return attachments;
+	}
+	public void setAttachments(Set<Attachment> attachments) {
+		this.attachments = attachments;
+	}
 	@Override
 	public String toString() {
-		return "PostDto [category=" + category + ", subject=" + subject + ", description=" + description + "]";
+		return "PostDto [category=" + category + ", subject=" + subject + ", description=" + description
+				+ ", attachments=" + attachments + "]";
 	}
-
 	
 }

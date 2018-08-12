@@ -25,6 +25,7 @@ public class PostService
 		post.setCategory(dto.getCategory().trim());
 		post.setDescription(dto.getDescription().trim());
 		post.setSubject(dto.getSubject().trim());
+		post.setAttachments(dto.getAttachments());
 		dao.saveNewPost(post);
 	}
 	
@@ -41,9 +42,15 @@ public class PostService
 	}
 	
 	@Transactional
-	public boolean increseViewById(int id)
+	public boolean increaseLikesById(int id)
 	{
-		return dao.increaseViewById(id);
+		return dao.increaseLikesById(id);
+	}
+
+	@Transactional
+	public boolean increaseDislikesById(int id)
+	{
+		return dao.increaseDislikesById(id);
 	}
 	
 	@Transactional

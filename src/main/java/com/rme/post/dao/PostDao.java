@@ -10,6 +10,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.rme.post.model.Comment;
 import com.rme.post.model.Post;
 
 @Repository
@@ -41,8 +42,8 @@ public class PostDao
 		return posts;
 	}
 	
-	//-----------------------increment view----------------------------//
-	public boolean increaseViewById(int id)
+	//-----------------------increment likes----------------------------//
+	public boolean increaseLikesById(int id)
 	{
 		Criteria criteria = sf.getCurrentSession().createCriteria(Post.class);
 		criteria.add(Restrictions.eq("id", id));
@@ -51,7 +52,22 @@ public class PostDao
 			return false;
 		else {
 			Post post = posts.get(0);
-			post.setViews(post.getViews()+1);
+			post.setLikes(post.getLikes()+1);
+			return true;
+		}
+	}
+
+	//-----------------------increment dislikes----------------------------//
+	public boolean increaseDislikesById(int id)
+	{
+		Criteria criteria = sf.getCurrentSession().createCriteria(Post.class);
+		criteria.add(Restrictions.eq("id", id));
+		List<Post> posts = criteria.list();
+		if(posts.isEmpty())
+			return false;
+		else {
+			Post post = posts.get(0);
+			post.setDislikes(post.getDislikes()+1);
 			return true;
 		}
 	}
@@ -119,6 +135,6 @@ public class PostDao
 			sf.getCurrentSession().delete(post);
 			return true;
 		}
-		
 	}
+	
 }
